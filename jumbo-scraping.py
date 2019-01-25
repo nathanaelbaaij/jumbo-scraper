@@ -12,7 +12,6 @@ productCount = 0
 
 
 def printStatus(pageNumber, emptyPage):
-    print("=========================================")
     print("Current pagenumber: {}".format(pageNumber))
     print("Empty pages found: {}".format(emptyPage))
     print("Product count: {}".format(productCount))
@@ -28,7 +27,7 @@ def saveProductToCSV(sku, title, link, price, image):
 
     productArray['sku'] = str(sku)
     productArray['title'] = str(title)
-    productArray['link'] = str(link)
+    productArray['link'] = cleanUpProductLink(str(link))
     productArray['price'] = price
     productArray['image'] = str(image)
 
@@ -49,8 +48,15 @@ def saveProductToCSV(sku, title, link, price, image):
     return
 
 
+# removing unnecessary characters from the products link
+def cleanUpProductLink(link):
+    seperator = ';pgid='
+    newLink = link.split(seperator, 1)[0]
+    return newLink
+
+
 # while True
-while pageNumber < 2:
+while True:
 
     jumboUrl = "https://www.jumbo.com/producten?PageNumber={}&SortingAttribute=ALPHABETICAL_ASCENDING".format(
         pageNumber)
